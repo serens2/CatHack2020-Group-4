@@ -111,8 +111,10 @@ def parseManufacturing(text):
 
     frequencies['manufacturing'] = val
 
-def parseText(text):
+def parseText(text, verbose=False):
 
+    if verbose:
+        print(text)
     threads = []
 
     financeTask = threading.Thread(target=parseFinance, args=(text,))
@@ -136,6 +138,8 @@ def parseText(text):
 
     result = max(frequencies.items(), key=operator.itemgetter(1))[0]
 
+    if verbose:
+        print(frequencies)
 
     strength = max(frequencies.items(), key=operator.itemgetter(1))[1]
     if result == 'finance':
@@ -147,8 +151,10 @@ def parseText(text):
     elif result == 'manufacturing':
         strength /= len(manufacturing_keywords)
 
+    if verbose:
+        print(result, strength)
 
     return result, strength
 
-def categorize(resume):
-    return parseText(extractPDFText(resume))
+def categorize(resume, verbose=False):
+    return parseText(extractPDFText(resume), verbose)

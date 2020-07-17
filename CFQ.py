@@ -5,6 +5,10 @@ import requests
 import queue
 
 def main():
+    test2()
+
+
+def test1():
     claire = Applicant('Claire', 'cmboyan@gmail.com', 'Senior', 'CS', True, 'examplePDFs/resume.pdf')
     tyler = Applicant('Tyler', 'tyatcat@gmail.com', 'Senior', 'Mechanical Engineering', False, 'examplePDFs/tyler.pdf')
     sam = Applicant('Sam', 'serens@gmail.com', 'Junior', 'Math', False, 'examplePDFs/sam.pdf')
@@ -18,6 +22,23 @@ def main():
 
     q.display()
 
+def test2():
+    claire = Applicant('Claire', 'cmboyan@gmail.com', 'Senior', 'CS', True, 'examplePDFs/resume.pdf')
+    tyler = Applicant('Tyler', 'tyatcat@gmail.com', 'Senior', 'Mechanical Engineering', False, 'examplePDFs/tyler.pdf')
+    sam = Applicant('Sam', 'serens@gmail.com', 'Junior', 'Math', False, 'examplePDFs/sam.pdf')
+    andrew = Applicant('Andrew', 'alu@gmail.com', 'Senior', 'Business', True, 'examplePDFs/andrew.pdf')
+
+    q = Line()
+    q.add(claire)
+    q.add(tyler)
+    q.add(sam)
+    q.add(andrew)
+
+    q.display()
+    print('\n\n\n')
+    q.pop()
+    print('\n\n\n')
+    q.display()
 
 class Applicant:
     def __init__(self, name, email, year, major, reference, resume):
@@ -91,7 +112,9 @@ class Line:
     def display(self):
         print('Current Queue')
         print('--------------------------------')
-        for wait in self.q:
+        disp = [x for x in self.q]
+        disp.reverse()
+        for wait in disp:
             wait.display()
             print('--------------------------------')
 

@@ -52,8 +52,11 @@ def extractPDFText(filename):
     retstr.close()
 
     text = text.lower()
+    text_arr = text.split()
+    table = str.maketrans('', '', string.punctuation)
+    text_arr = [t.translate(table) for t in text_arr]
 
-    return text.split()
+    return text_arr
 
 def parseFinance(text):
     val = 0

@@ -20,7 +20,7 @@ softwareDevelopment_keywords = ['cs', 'back end', 'backend', 'front end', 'front
                                 'data analytics', 'data analysis', 'data science', 'science', 'technology', 'security', 'cyber', 'computer', 'computer science', 'support',
                                 'framework', 'terminal', 'java', 'python', 'github', 'developer', 'artificial intelligence', 'artificial', 'ai', 'it', 'machine learning',
                                 'machine', 'virtual', 'cybersecurity', 'security', 'cyber', 'software', 'latex', 'mathematics', 'mips', 'assembly', 'c++', 'programming',
-                                'program', 'code', 'coding', 'javascript', 'sql']
+                                'program', 'code', 'coding', 'javascript', 'sql', 'robotic', 'robot', 'robotics', 'networking']
 
 manufacturing_keywords = ['manufacturing', 'manufacture', 'mechanical engineering', 'mechanical', 'mechanics', 'engineering', 'civil engineering', 'civil engineer', 'civil',
                           'industrial', 'industrial engineering', 'robotic', 'robotics', 'construction', 'build', 'process', 'factory', 'industry', 'construct', 'oversee',
@@ -50,6 +50,9 @@ def extractPDFText(filename):
     fp.close()
     device.close()
     retstr.close()
+
+    text = text.lower()
+
     return text.split()
 
 def parseFinance(text):
@@ -58,11 +61,11 @@ def parseFinance(text):
         if ' ' in word:
             arr = word.split()
             for i in range(len(text) - 1):
-                if text[i].lower() == arr[0] and text[i + 1].lower() == arr[1]:
+                if text[i] == arr[0] and text[i + 1] == arr[1]:
                     val += 1
         else:
             if word in text:
-                val +=1
+                val += text.count(word)
 
     frequencies['finance'] = val
 
@@ -72,11 +75,12 @@ def parseHumanResources(text):
         if ' ' in word:
             arr = word.split()
             for i in range(len(text) - 1):
-                if text[i].lower() == arr[0] and text[i + 1].lower() == arr[1]:
+                if text[i] == arr[0] and text[i + 1] == arr[1]:
                     val += 1
         else:
             if word in text:
-                val += 1
+                val += text.count(word)
+
     frequencies['humanResources'] = val
 
 def parseSoftwareDevelopment(text):
@@ -85,11 +89,12 @@ def parseSoftwareDevelopment(text):
         if ' ' in word:
             arr = word.split()
             for i in range(len(text) - 1):
-                if text[i].lower() == arr[0] and text[i + 1].lower() == arr[1]:
+                if text[i] == arr[0] and text[i + 1] == arr[1]:
                     val += 1
         else:
             if word in text:
-                val += 1
+                val += text.count(word)
+
     frequencies['softwareDevelopment'] = val
 
 def parseManufacturing(text):
@@ -98,11 +103,12 @@ def parseManufacturing(text):
         if ' ' in word:
             arr = word.split()
             for i in range(len(text) - 1):
-                if text[i].lower() == arr[0] and text[i + 1].lower() == arr[1]:
+                if text[i] == arr[0] and text[i + 1] == arr[1]:
                     val += 1
         else:
             if word in text:
-                val += 1
+                val += text.count(word)
+
     frequencies['manufacturing'] = val
 
 def parseText(text):

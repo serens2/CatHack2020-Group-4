@@ -1,4 +1,5 @@
 from resumeParser import extractPDFText
+from resumeParser import categorize
 
 import requests
 import queue
@@ -34,12 +35,12 @@ class Applicant:
         self.color = self.pick_color()
 
     def assign_vertical(self):
-        #raw_text = extractPDFText(self.resume)
-        score = .8
-        return self.resume, score
+        self.vertical, score = categorize(self.resume)
+        return self.vertical, score
 
     def score_strength(self, score):
-        if score > 0.5:
+        print(score)
+        if score > 0.8:
             return 'strongly'
         else:
             return 'weakly'
@@ -48,13 +49,11 @@ class Applicant:
         return 'Red'
 
     def display(self):
-        info = '''
-        Applicant {} is a {} in {}.
-        You can contact them at {}.
-        Applicant {} matches with {}.
-        '''.format(self.name, self.year, self.major, self.email, self.strength, self.vertical)
+        info = '''Applicant {} is a {} in {}.
+You can contact them at {}.
+Applicant {} matches with {}.'''.format(self.name, self.year, self.major, self.email, self.strength, self.vertical)
         if self.reference:
-            print(info + 'Applicant does have a reference.\n')
+            print(info + '\nApplicant does have a reference.')
         else:
             print(info)
 
@@ -80,9 +79,10 @@ class Line:
             self.q.append(app)
 
     def display(self):
+        print('--------------------------------')
         for wait in self.q:
             wait.display()
-
+            print('--------------------------------')
 
 
 

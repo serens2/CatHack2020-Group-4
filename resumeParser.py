@@ -12,9 +12,9 @@ finance_keywords = ['finance', 'money', 'portfolio', 'stock', 'stocks', 'economi
                     'middle market', 'strategic', 'private equity', 'capital', 'evaluation']
 
 humanResources_keywords = ['human resource', 'human resources', 'social work', 'communication', 'human', 'people', 'people skills', 'interpersonal', 'emotional',
-                           'diversity', 'budgeting', 'conflict resolution', 'conflict', 'decision making', 'consumer', 'managed', 'soft skills', 'manage', 'teamwork',
-                           'team building', 'team', 'cooperation', 'cooperate', 'logistics', 'organization', 'ethics', 'ethical', 'organize', 'customer', 'relationship',
-                           'management']
+            'diversity', 'budgeting', 'conflict resolution', 'conflict', 'decision making', 'consumer', 'managed', 'soft skills','manage',
+            'teamwork','team building', 'team', 'cooperation', 'cooperate', 'logistics', 'organization', 'ethics', 'ethical', 'organize',
+            'customer','relationship', 'management']
 
 softwareDevelopment_keywords = ['cs', 'back end', 'backend', 'front end', 'frontend', 'full stack', 'full stack', 'application', 'features', 'data', 'analytics', 'analysis',
                                 'data analytics', 'data analysis', 'data science', 'science', 'technology', 'security', 'cyber', 'computer', 'computer science', 'support',
@@ -135,7 +135,19 @@ def parseText(text):
         t.join()
 
     result = max(frequencies.items(), key=operator.itemgetter(1))[0]
-    return result
+
+    strength = max(frequencies.items(), key=operator.itemgetter(1))[1] / len()
+    if result == 'finance':
+        strength /= len(finance_keywords)
+    elif result == 'humanResources':
+        strength /= len(humanResources_keywords)
+    elif result == 'softwareDevelopment':
+        strength /= len(softwareDevelopment_keywords)
+    elif result == 'manufacturing':
+        strength /= len(manufacturing_keywords)
+
+
+    return result, strength
 
 def categorize(resume):
     return parseText(extractPDFText(resume))

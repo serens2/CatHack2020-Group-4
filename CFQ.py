@@ -5,16 +5,16 @@ import requests
 import queue
 
 def main():
-    claire = Applicant('Claire', 'cmboyan@gmail.com', 'Senior', 'CS', True, 'examplePDFs/claire.pdf')
+    claire = Applicant('Claire', 'cmboyan@gmail.com', 'Senior', 'CS', True, 'examplePDFs/resume.pdf')
     tyler = Applicant('Tyler', 'tyatcat@gmail.com', 'Senior', 'Mechanical Engineering', False, 'examplePDFs/tyler.pdf')
     sam = Applicant('Sam', 'serens@gmail.com', 'Junior', 'Math', False, 'examplePDFs/sam.pdf')
-    noah = Applicant('Noah', 'noahi2@gmail.com', 'Senior', 'CS', True, 'examplePDFs/noah.pdf')
+    andrew = Applicant('Andrew', 'alu@gmail.com', 'Senior', 'Business', True, 'examplePDFs/andrew.pdf')
 
     q = Line()
     q.add(claire)
     q.add(tyler)
     q.add(sam)
-    q.add(noah)
+    q.add(andrew)
 
     q.display()
 
@@ -32,26 +32,35 @@ class Applicant:
         # Calculated
         self.vertical, score = self.assign_vertical()
         self.strength = self.score_strength(score)
-        self.color = self.pick_color()
+        self.color = self.pick_color(self.vertical)
 
     def assign_vertical(self):
         self.vertical, score = categorize(self.resume)
         return self.vertical, score
 
     def score_strength(self, score):
-        print(score)
-        if score > 0.8:
+        if score > 0.45:
             return 'strongly'
         else:
             return 'weakly'
 
-    def pick_color(self):
-        return 'Red'
+    def pick_color(self, vert):
+        color = 'Red'
+        if vert == 'finance':
+            color = 'Red'
+        elif vert == 'humanResources':
+            color = 'Orange'
+        elif vert == 'softwareDevelopment':
+            color = 'Blue'
+        elif vert == 'manufactoring':
+            color = 'Green'
+        return color
 
     def display(self):
         info = '''Applicant {} is a {} in {}.
 You can contact them at {}.
-Applicant {} matches with {}.'''.format(self.name, self.year, self.major, self.email, self.strength, self.vertical)
+Applicant {} matches with {}.
+Applicant is looking for the color {}'''.format(self.name, self.year, self.major, self.email, self.strength, self.vertical, self.color)
         if self.reference:
             print(info + '\nApplicant does have a reference.')
         else:
@@ -69,6 +78,7 @@ class Line:
             print('There is no one in line')
         else:
             next_in_line = current_line.pop()
+            print('Now helping:')
             next_in_line.display()
 
     def add(self, app):
@@ -79,6 +89,7 @@ class Line:
             self.q.append(app)
 
     def display(self):
+        print('Current Queue')
         print('--------------------------------')
         for wait in self.q:
             wait.display()

@@ -6,7 +6,7 @@ from io import StringIO
 import operator
 import threading
 
-ignore_keywords = ['the', 'and', 'a', 'an', 'with', 'just', 'at', 'in', 'i', 'me', 'of', 'on', 'to', 'it', 'like', '.', ',', '\'', '\"', ';', '?', '!', '(', ')', '-', '*']
+ignore_keywords = ['the', 'and', 'a', 'an', 'with', 'just', 'at', 'in', 'i', 'me', 'of', 'on', 'to', 'it', 'like', '.', ',', '\'', '\"', ';', '?', '!', '(', ')', '-', '*', '']
 
 finance_keywords = ['finance', 'money', 'portfolio', 'stock', 'stocks', 'economics', 'firm', 'accounting', 'integrity', 'optimize', 'financed', 'analyze', 'growth',
                     'middle market', 'strategic', 'private equity', 'capital', 'evaluation']
@@ -136,7 +136,8 @@ def parseText(text):
 
     result = max(frequencies.items(), key=operator.itemgetter(1))[0]
 
-    strength = max(frequencies.items(), key=operator.itemgetter(1))[1] / len()
+
+    strength = max(frequencies.items(), key=operator.itemgetter(1))[1]
     if result == 'finance':
         strength /= len(finance_keywords)
     elif result == 'humanResources':
